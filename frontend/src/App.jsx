@@ -1,4 +1,4 @@
-import Watchlist from "./watchlist";
+import Watchlist from "./Watchlist";
 
 function App() {
   return (

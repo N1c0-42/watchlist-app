@@ -1,15 +1,19 @@
 import { useState, useEffect } from "react";
 
 function Watchlist() {
-  // 1️⃣ Beim Start aus localStorage lesen
+  // ✅ State 1: Filme (aus localStorage)
   const [movies, setMovies] = useState(() => {
     const saved = localStorage.getItem("movies");
     return saved ? JSON.parse(saved) : [];
   });
 
+  // ✅ State 2: Eingabefeld
   const [newTitle, setNewTitle] = useState("");
 
-  // 2️⃣ Bei jeder Änderung speichern
+  // ✅ State 3: Favoriten-Filter
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+
+  // ✅ Bei jeder Änderung speichern
   useEffect(() => {
     localStorage.setItem("movies", JSON.stringify(movies));
   }, [movies]);
@@ -41,6 +45,11 @@ function Watchlist() {
     );
   }
 
+  // ✅ Gefilterte Anzeige (nur Darstellung!)
+  const filteredMovies = showFavoritesOnly
+    ? movies.filter((movie) => movie.isFavorite)
+    : movies;
+
   return (
     <div>
       <h2>Meine Watchlist</h2>
@@ -54,8 +63,21 @@ function Watchlist() {
 
       <button onClick={addMovie}>Hinzufügen</button>
 
-      <ul>
-        {movies.map((movie) => (
+      <button
+        onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
+        style={{ marginTop: "10px" }}
+      >
+        {showFavoritesOnly ? "Alle anzeigen" : "Nur Favoriten ❤️"}
+      </button>
+
+      {filteredMovies.length === 0 && (
+        <p style={{ marginTop: "10px" }}>
+          Keine Filme in der Watchlist 🎬
+        </p>
+      )}
+
+      <ul style={{ marginTop: "10px" }}>
+        {filteredMovies.map((movie) => (
           <li key={movie.id}>
             <span
               style={{
@@ -65,8 +87,18 @@ function Watchlist() {
               {movie.title}
             </span>
 
-            <button onClick={() => toggleFavorite(movie.id)}>❤️</button>
-            <button onClick={() => deleteMovie(movie.id)}>❌</button>
+            <button
+              onClick={() => toggleFavorite(movie.id)}
+              style={{ marginLeft: "8px" }}
+            >
+              ❤️
+            </button>
+            <button
+              onClick={() => deleteMovie(movie.id)}
+              style={{ marginLeft: "4px" }}
+            >
+              ❌
+            </button>
           </li>
         ))}
       </ul>
