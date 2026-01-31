@@ -1,0 +1,32 @@
+.movie-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.movie-actions button {
+  background: transparent;
+  border: none;
+  color: #e5e7eb;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.movie-actions button:hover {
+  color: #22c55e;
+  background-color: rgba(34, 197, 94, 0.1);
+}
+
+.movie-notes {
+  margin-top: 8px;
+  padding-top: 6px;
+
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: #bdbdbd;
+
+  border-top: 1px dashed rgba(255, 255, 255, 0.12);
+
+  white-space: pre-wrap;
+}
